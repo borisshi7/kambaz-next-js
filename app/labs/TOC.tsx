@@ -8,17 +8,17 @@ export default function TOC() {
         </Link>
       </li>
       <li>
-        <Link href="/labs/Lab1" id="wd-lab1-link">
+        <Link href="/labs/lab1" id="wd-lab1-link">
           Lab 1
         </Link>
       </li>
       <li>
-        <Link href="/labs/Lab2" id="wd-lab2-link">
+        <Link href="/labs/lab2" id="wd-lab2-link">
           Lab 2
         </Link>
       </li>
       <li>
-        <Link href="/labs/Lab3" id="wd-lab3-link">
+        <Link href="/labs/lab3" id="wd-lab3-link">
           Lab 3
         </Link>
       </li>

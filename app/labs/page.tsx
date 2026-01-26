@@ -3,8 +3,8 @@ export default function labs() {
   return (
     <div id="wd-labs">
       <h1>Labs</h1>
+      <div>Name: Bohan Shi</div>
       <ul>
-        <div>Name: Bohan Shi</div>
         <br />
         <li>
           <Link href="/labs/lab1" id="wd-lab1-link">
@@ -22,11 +22,15 @@ export default function labs() {
           </Link>
         </li>
         <li>
-          <Link href="/" id="wd-lab3-link">
+          <Link href="/" id="wd-kambaz">
             Kambaz
           </Link>
         </li>
       </ul>
+      <br/>
+      <a href="https://github.com/borisshi7/kambaz-next-js" id="wd-github">
+        My GitHub Repository
+      </a>
     </div>
   );
 }
