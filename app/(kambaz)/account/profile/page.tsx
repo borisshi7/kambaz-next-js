@@ -1,40 +1,39 @@
+"use client";
 import Link from "next/link";
+import { LiaCalendarSolid } from "react-icons/lia";
+import { Form, InputGroup, Row, Col } from "react-bootstrap";
 export default function Profile() {
   return (
-    <div id="wd-profile-screen">
-      <h3>Profile</h3>
-      <input
-        defaultValue="alice"
-        placeholder="username"
-        className="wd-username"
-      />
-      <br />
-      <input
-        defaultValue="123"
-        placeholder="password"
-        type="password"
-        className="wd-password"
-      />
-      <br />
-      <input defaultValue="Alice" placeholder="First Name" id="wd-firstname" />
-      <br />
-      <input
-        defaultValue="Wonderland"
-        placeholder="Last Name"
-        id="wd-lastname"
-      />
-      <br />
-      <input defaultValue="2000-01-01" type="date" id="wd-dob" />
-      <br />
-      <input defaultValue="alice@wonderland" type="email" id="wd-email" />
-      <br />
-      <select defaultValue="FACULTY" id="wd-role">
-        <option value="USER">User</option> <option value="ADMIN">Admin</option>
-        <option value="FACULTY">Faculty</option>
-        <option value="STUDENT">Student</option>
-      </select>
-      <br />
-      <Link href="signin"> Sign out </Link>
+    <div id="wd-css-styling-forms" className="">
+      <h2>Profile</h2>
+      <div>
+        <Row>
+          <Col xs={4}>
+            <Form.Control type="text" className="mb-2" defaultValue="alice" />
+            <Form.Control type="text" className="mb-2" defaultValue="alice" />
+            <Form.Control type="password" className="mb-2" defaultValue="123" />
+            <Form.Control type="text" className="mb-2" defaultValue="Alice" />
+            <InputGroup>
+              <Form.Control
+                type="datetime-local"
+                className="mb-2"
+                defaultValue="2024-05-13T23:59"
+              />
+              <InputGroup.Text>
+                <LiaCalendarSolid />
+              </InputGroup.Text>
+            </InputGroup>
+            <Form.Control type="email" className="mb-2" defaultValue="alice@wonderland.com" />
+            <Form.Control type="text" className="mb-2" defaultValue="User" />
+            <a
+              href="/account/signin"
+              className="btn border d-grid btn-danger"
+            >
+              Cancel
+            </a>
+          </Col>
+        </Row>
+      </div>
     </div>
   );
 }

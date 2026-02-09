@@ -1,165 +1,177 @@
+"use client";
+import { Form, Row, Col, InputGroup } from "react-bootstrap";
+import { LiaCalendarSolid, LiaTimesSolid } from "react-icons/lia";
 export default function AssignmentEditor() {
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" />
-      <br />
-      <br />
-      <textarea
-        id="wd-description"
-        defaultValue="The assignment is available online Submit a link to the landing page of"
-      ></textarea>
-      <br />
-      <table>
-        <tbody>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" defaultValue={100} />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assignment-group">Assignment Group</label>
-            </td>
-            <td>
-              <select id="wd-assignment-group">
-                <option>ASSIGNMENT</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
-            <td>
-              <select id="wd-display-grade-as">
-                <option>Percentage</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-              <select id="wd-submission-type">
-                <option>Online</option>
-              </select>
-              <div>
-                <label>Online Entry Options</label>
-                <br />
-                <input
-                  type="checkbox"
-                  name="check-online-entry-options"
-                  id="wd-chkbox-text-entry"
-                />
-                <label htmlFor="wd-chkbox-text-entry">Text Entry</label>
-                <br />
+    <div>
+      <div id="wd-css-styling-forms">
+        <Form.Label>Assignment Name</Form.Label>
+        <Form.Control type="text" defaultValue="A1" />
+        <br />
+        <div className="border rounded p-3 mb-3">
+          <p>
+            This assignment is
+            <span className="text-danger">available online</span>
+          </p>
+          <p>
+            Submit a link to the landing page of your web application running on
+            Netlify.
+          </p>
+          <p>The landing page should include the following:</p>
+          <ul>
+            <li>Your full name and section</li>
+            <li>Links to each of the lab assignments</li>
+            <li>A link to the Kanbas application</li>
+            <li>Links to all relevant source code repositories</li>
+          </ul>
+          <p>
+            The Kanbas application should include a link to navigate back to the
+            landing page.
+          </p>
+        </div>
 
-                <input
-                  type="checkbox"
-                  name="check-online-entry-options"
-                  id="wd-chkbox-website-url"
-                />
-                <label htmlFor="wd-chkbox-website-url">Website URL</label>
+        <div id="wd-css-responsive-forms-1">
+          <Row className="mb-3">
+            <Form.Label column sm={2} className="text-end">
+              Points
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Control type="text" defaultValue="100" />
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Form.Label column sm={2} className="text-end">
+              Assignment Group
+            </Form.Label>
+            <Col sm={10}>
+              <Form.Select>
+                <option value="assignment">ASSIGNMENTS</option>
+              </Form.Select>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Form.Label column sm={2} className="text-end">
+              Submission Type
+            </Form.Label>
+            <Col sm={10}>
+              <div className="border rounded p-3 mb-3">
+                <Form.Select>
+                  <option value="assignment">ONLINE</option>
+                </Form.Select>
                 <br />
-
-                <input
+                <Form.Label className="fw-bold">
+                  Online Entry Options
+                </Form.Label>
+                <Form.Check
                   type="checkbox"
-                  name="check-online-entry-options"
-                  id="wd-chkbox-media-recording"
+                  label="Text Entry"
+                  id="text-entry"
+                  value="text-entry"
                 />
-                <label htmlFor="wd-chkbox-media-recording">
-                  Media Recording
-                </label>
                 <br />
-
-                <input
+                <Form.Check
+                  checked
                   type="checkbox"
-                  name="check-online-entry-options"
-                  id="wd-chkbox-student-annotation"
+                  label="Website URL"
+                  id="website-url"
+                  value="website-url"
                 />
-                <label htmlFor="wd-chkbox-student-annotation">
-                  Student Annotation
-                </label>
                 <br />
-                <input
+                <Form.Check
                   type="checkbox"
-                  name="check-online-entry-options"
-                  id="wd-chkbox-file-uploads"
+                  label="Media Recording"
+                  id="media-recording"
+                  value="media-recording"
                 />
-                <label htmlFor="wd-chkbox-file-uploads">File Uploads</label>
+                <br />
+                <Form.Check
+                  type="checkbox"
+                  label="Student Annotation"
+                  id="student-annotation"
+                  value="student-annotation"
+                />
+                <br />
+                <Form.Check
+                  type="checkbox"
+                  label="File Uploads"
+                  id="file-uploads"
+                  value="file-uploads"
+                />
               </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <br />
-      <table>
-        <tbody>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign">Assign</label>
-            </td>
-            <td>
-              <label htmlFor="wd-assign-to">Assign To</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <input id="wd-assign-to" defaultValue={"Everyone"} />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <label htmlFor="wd-due">Due</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <input type="date" defaultValue="2024-05-13" id="wd-due" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <label htmlFor="wd-available-from">Available from</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <input
-                type="date"
-                defaultValue="2024-05-06"
-                id="wd-available-from"
-              />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <label htmlFor="wd-until">To</label>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top"></td>
-            <td>
-              <input
-                type="date"
-                defaultValue="2024-05-13"
-                id="wd-until"
-              />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </Col>
+          </Row>
+          <Row className="mb-3">
+            <Form.Label column sm={2} className="text-end">
+              Assign
+            </Form.Label>
+            <Col sm={10}>
+              <div className="border rounded p-3 mb-3">
+                <Form.Label className="fw-bold">Assign To</Form.Label>
+                <div className="border rounded p-1 d-flex align-items-center">
+                  <span
+                    className="bg-light rounded px-3 py-1 d-flex align-items-center"
+                    style={{ fontSize: "0.9em" }}
+                  >
+                    Everyone
+                    <LiaTimesSolid
+                      className="ms-4"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </span>
+                </div>
+                <br />
+                <Form.Label className="fw-bold">Due</Form.Label>
+                <InputGroup>
+                  <Form.Control
+                    type="datetime-local"
+                    defaultValue="2024-05-13T23:59"
+                  />
+                  <InputGroup.Text>
+                    <LiaCalendarSolid />
+                  </InputGroup.Text>
+                </InputGroup>
+                <br />
+                <Row>
+                  <Col sm={6}>
+                    <Form.Label className="fw-bold">Available From</Form.Label>
+                    <InputGroup>
+                      <Form.Control
+                        type="datetime-local"
+                        defaultValue="2024-05-6T12:00"
+                      />
+                      <InputGroup.Text>
+                        <LiaCalendarSolid />
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Col>
+                  <Col sm={6}>
+                    <Form.Label className="fw-bold">Until</Form.Label>
+                    <InputGroup>
+                      <Form.Control type="datetime-local" />
+                      <InputGroup.Text>
+                        <LiaCalendarSolid />
+                      </InputGroup.Text>
+                    </InputGroup>
+                  </Col>
+                </Row>
+              </div>
+            </Col>
+          </Row>
+        </div>
+
+        <hr />
+        <div className="text-end">
+          <a
+            href="/courses/1234/assignments"
+            className="btn border btn-light me-1"
+          >
+            Cancel
+          </a>
+          <a href="/courses/1234/assignments" className="btn btn-danger">
+            Save
+          </a>
+        </div>
+      </div>
     </div>
   );
 }
