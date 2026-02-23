@@ -1,16 +1,22 @@
 "use client";
 import { Form, Row, Col, InputGroup } from "react-bootstrap";
 import { LiaCalendarSolid, LiaTimesSolid } from "react-icons/lia";
+import { useParams } from "next/navigation";
+import * as db from "../../../../database";
+import Link from "next/link";
+
 export default function AssignmentEditor() {
+  const { cid, aid } = useParams();
+  const assignment = db.assignments.find((a: any) => a._id === aid);
   return (
     <div>
       <div id="wd-css-styling-forms">
         <Form.Label>Assignment Name</Form.Label>
-        <Form.Control type="text" defaultValue="A1" />
+        <Form.Control type="text" defaultValue={assignment?.title} />
         <br />
         <div className="border rounded p-3 mb-3">
           <p>
-            This assignment is
+            This assignment is{" "}
             <span className="text-danger">available online</span>
           </p>
           <p>
@@ -36,7 +42,7 @@ export default function AssignmentEditor() {
               Points
             </Form.Label>
             <Col sm={10}>
-              <Form.Control type="text" defaultValue="100" />
+              <Form.Control type="text" defaultValue={assignment?.score} />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -70,7 +76,7 @@ export default function AssignmentEditor() {
                 />
                 <br />
                 <Form.Check
-                  checked
+                  defaultChecked
                   type="checkbox"
                   label="Website URL"
                   id="website-url"
@@ -124,7 +130,7 @@ export default function AssignmentEditor() {
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue="2024-05-13T23:59"
+                    defaultValue={assignment?.dueDateDate}
                   />
                   <InputGroup.Text>
                     <LiaCalendarSolid />
@@ -137,7 +143,7 @@ export default function AssignmentEditor() {
                     <InputGroup>
                       <Form.Control
                         type="datetime-local"
-                        defaultValue="2024-05-6T12:00"
+                        defaultValue={assignment?.availableFromDate}
                       />
                       <InputGroup.Text>
                         <LiaCalendarSolid />
@@ -161,15 +167,8 @@ export default function AssignmentEditor() {
 
         <hr />
         <div className="text-end">
-          <a
-            href="/courses/1234/assignments"
-            className="btn border btn-light me-1"
-          >
-            Cancel
-          </a>
-          <a href="/courses/1234/assignments" className="btn btn-danger">
-            Save
-          </a>
+          <Link href={`/courses/${cid}/assignments`} className="btn border btn-light me-1">Cancel</Link>
+          <Link href={`/courses/${cid}/assignments`} className="btn btn-danger">Save</Link>
         </div>
       </div>
     </div>
