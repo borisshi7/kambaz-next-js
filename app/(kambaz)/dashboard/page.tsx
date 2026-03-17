@@ -44,14 +44,14 @@ export default function Dashboard() {
 
   return (
     <div id="wd-dashboard">
-      <h1 id="wd-dashboard-title">Dashboard</h1>
-      <button
-        className="btn btn-primary float-end"
-        onClick={() => setShowAllCourses(!showAllCourses)}
-        id="wd-update-course-click"
-      >
-        Enroll
-      </button>
+      <h1 id="wd-dashboard-title">Dashboard
+        <button
+          className="btn btn-primary float-end"
+          onClick={() => setShowAllCourses(!showAllCourses)}
+        >
+          Enrollments
+        </button>
+      </h1>
       <hr />
       {(currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") && (
         <h5>
