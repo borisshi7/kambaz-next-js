@@ -1,10 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
+import { clickSidebar } from "./sidebarReducer";
 
 export default function CourseNavigation() {
   const { cid } = useParams();
   const pathname = usePathname();
+  const { sidebar } = useSelector((state: RootState) => state.sidebarReducer);
+
   const links = [
     { label: "Home", path: "home" },
     { label: "Modules", path: "modules" },
@@ -16,18 +21,25 @@ export default function CourseNavigation() {
     { label: "People", path: "people/table" },
   ];
   return (
-    <div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
+    <>
+    {
+      sidebar &&
+      (<div id="wd-courses-navigation" className="wd list-group fs-5 rounded-0">
       {links.map((link) => (
         <Link
           key={link.label}
           href={`/courses/${cid}/${link.path}`}
           className={`list-group-item border-0 ${
-            pathname.includes(link.label.toLowerCase()) ? "active" : "text-danger"
+            pathname.includes(link.label.toLowerCase())
+              ? "active"
+              : "text-danger"
           }`}
         >
           {link.label}
         </Link>
       ))}
-    </div>
+    </div>)
+    }
+    </>
   );
 }

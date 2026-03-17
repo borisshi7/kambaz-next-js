@@ -1,48 +1,77 @@
 "use client";
-import { Form, Row, Col, InputGroup } from "react-bootstrap";
+import { Form, Row, Col, InputGroup, Button } from "react-bootstrap";
 import { LiaCalendarSolid, LiaTimesSolid } from "react-icons/lia";
-import { useParams } from "next/navigation";
-import * as db from "../../../../database";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/app/(kambaz)/store";
+import { addAssignment, updateAssignment } from "../reducer";
+import { useState } from "react";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
-  const assignment = db.assignments.find((a: any) => a._id === aid);
+
+  const { assignments } = useSelector(
+    (state: RootState) => state.assignmentReducer,
+  );
+  const {currentUser} = useSelector(
+    (state: RootState) => state.accountReducer,
+  );
+  
+  const found =
+    aid !== "new" ? assignments.find((a: any) => a._id === aid) : null;
+  const [assignment, setAssignment] = useState(
+    found || {
+      title: "",
+      description: "",
+      score: "",
+      course: cid,
+      availableFromDate: "",
+      dueDateDate: "",
+    },
+  );
+
+  const dispatch = useDispatch();
+
+  const router = useRouter();
+
   return (
     <div>
       <div id="wd-css-styling-forms">
         <Form.Label>Assignment Name</Form.Label>
-        <Form.Control type="text" defaultValue={assignment?.title} />
+        <Form.Control
+          type="text"
+          value={assignment?.title}
+          readOnly={(currentUser as any)?.role !== "FACULTY"}
+          onChange={(e) =>
+            setAssignment({ ...assignment, title: e.target.value })
+          }
+        />
         <br />
-        <div className="border rounded p-3 mb-3">
-          <p>
-            This assignment is{" "}
-            <span className="text-danger">available online</span>
-          </p>
-          <p>
-            Submit a link to the landing page of your web application running on
-            Netlify.
-          </p>
-          <p>The landing page should include the following:</p>
-          <ul>
-            <li>Your full name and section</li>
-            <li>Links to each of the lab assignments</li>
-            <li>A link to the Kanbas application</li>
-            <li>Links to all relevant source code repositories</li>
-          </ul>
-          <p>
-            The Kanbas application should include a link to navigate back to the
-            landing page.
-          </p>
-        </div>
-
+        <Form.Control
+          as="textarea"
+          rows={3}
+          value={assignment?.description}
+          readOnly={(currentUser as any)?.role !== "FACULTY"}
+          onChange={(e) =>
+            setAssignment({ ...assignment, description: e.target.value })
+          }
+        />
+        <br />
         <div id="wd-css-responsive-forms-1">
           <Row className="mb-3">
             <Form.Label column sm={2} className="text-end">
               Points
             </Form.Label>
             <Col sm={10}>
-              <Form.Control type="text" defaultValue={assignment?.score} />
+              <Form.Control
+                type="text"
+                value={assignment?.score}
+                readOnly={(currentUser as any)?.role !== "FACULTY"}
+                onChange={(e) =>
+                  setAssignment({ ...assignment, score: e.target.value })
+                }
+              />
             </Col>
           </Row>
           <Row className="mb-3">
@@ -50,7 +79,7 @@ export default function AssignmentEditor() {
               Assignment Group
             </Form.Label>
             <Col sm={10}>
-              <Form.Select>
+              <Form.Select disabled={(currentUser as any)?.role !== "FACULTY"}>
                 <option value="assignment">ASSIGNMENTS</option>
               </Form.Select>
             </Col>
@@ -61,7 +90,7 @@ export default function AssignmentEditor() {
             </Form.Label>
             <Col sm={10}>
               <div className="border rounded p-3 mb-3">
-                <Form.Select>
+                <Form.Select disabled={(currentUser as any)?.role !== "FACULTY"}>
                   <option value="assignment">ONLINE</option>
                 </Form.Select>
                 <br />
@@ -73,6 +102,7 @@ export default function AssignmentEditor() {
                   label="Text Entry"
                   id="text-entry"
                   value="text-entry"
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
                 />
                 <br />
                 <Form.Check
@@ -81,6 +111,7 @@ export default function AssignmentEditor() {
                   label="Website URL"
                   id="website-url"
                   value="website-url"
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
                 />
                 <br />
                 <Form.Check
@@ -88,6 +119,7 @@ export default function AssignmentEditor() {
                   label="Media Recording"
                   id="media-recording"
                   value="media-recording"
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
                 />
                 <br />
                 <Form.Check
@@ -95,6 +127,7 @@ export default function AssignmentEditor() {
                   label="Student Annotation"
                   id="student-annotation"
                   value="student-annotation"
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
                 />
                 <br />
                 <Form.Check
@@ -102,6 +135,7 @@ export default function AssignmentEditor() {
                   label="File Uploads"
                   id="file-uploads"
                   value="file-uploads"
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
                 />
               </div>
             </Col>
@@ -130,7 +164,14 @@ export default function AssignmentEditor() {
                 <InputGroup>
                   <Form.Control
                     type="datetime-local"
-                    defaultValue={assignment?.dueDateDate}
+                    value={assignment?.dueDateDate}
+                    readOnly={(currentUser as any)?.role !== "FACULTY"}
+                    onChange={(e) =>
+                      setAssignment({
+                        ...assignment,
+                        dueDateDate: e.target.value,
+                      })
+                    }
                   />
                   <InputGroup.Text>
                     <LiaCalendarSolid />
@@ -143,7 +184,14 @@ export default function AssignmentEditor() {
                     <InputGroup>
                       <Form.Control
                         type="datetime-local"
-                        defaultValue={assignment?.availableFromDate}
+                        value={assignment?.availableFromDate}
+                        readOnly={(currentUser as any)?.role !== "FACULTY"}
+                        onChange={(e) =>
+                          setAssignment({
+                            ...assignment,
+                            availableFromDate: e.target.value,
+                          })
+                        }
                       />
                       <InputGroup.Text>
                         <LiaCalendarSolid />
@@ -153,7 +201,17 @@ export default function AssignmentEditor() {
                   <Col sm={6}>
                     <Form.Label className="fw-bold">Until</Form.Label>
                     <InputGroup>
-                      <Form.Control type="datetime-local" />
+                      <Form.Control
+                        type="datetime-local"
+                        value={assignment?.dueDateDate}
+                        readOnly={(currentUser as any)?.role !== "FACULTY"}
+                        onChange={(e) =>
+                          setAssignment({
+                            ...assignment,
+                            dueDateDate: e.target.value,
+                          })
+                        }
+                      />
                       <InputGroup.Text>
                         <LiaCalendarSolid />
                       </InputGroup.Text>
@@ -167,8 +225,25 @@ export default function AssignmentEditor() {
 
         <hr />
         <div className="text-end">
-          <Link href={`/courses/${cid}/assignments`} className="btn border btn-light me-1">Cancel</Link>
-          <Link href={`/courses/${cid}/assignments`} className="btn btn-danger">Save</Link>
+          <Link
+            href={`/courses/${cid}/assignments`}
+            className="btn border btn-light me-1"
+          >
+            Cancel
+          </Link>
+          <Button
+            className="btn btn-danger"
+            onClick={() => {
+              if (aid === "new") {
+                dispatch(addAssignment({ ...assignment, course: cid }));
+              } else {
+                dispatch(updateAssignment(assignment));
+              }
+              router.push(`/courses/${cid}/assignments`);
+            }}
+          >
+            Save
+          </Button>
         </div>
       </div>
     </div>
