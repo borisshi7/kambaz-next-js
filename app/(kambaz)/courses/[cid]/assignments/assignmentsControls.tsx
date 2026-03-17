@@ -28,7 +28,7 @@ export default function AssignmentControls() {
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Group
       </Button>
-      {(currentUser?.role === "FACULTY" || currentUser?.role === "ADMIN") && (
+      {((currentUser as any)?.role === "FACULTY" || (currentUser as any)?.role === "ADMIN") && (
         <Link href={`/courses/${cid}/assignments/new`}>
           <Button
             variant="danger"
