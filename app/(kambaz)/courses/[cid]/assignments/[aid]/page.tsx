@@ -5,8 +5,9 @@ import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { addAssignment, updateAssignment } from "../reducer";
+import { setAssignments } from "../reducer";
 import { useState } from "react";
+import * as client from "../../../client";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
@@ -14,13 +15,13 @@ export default function AssignmentEditor() {
   const { assignments } = useSelector(
     (state: RootState) => state.assignmentReducer,
   );
-  const {currentUser} = useSelector(
+  const { currentUser } = useSelector(
     (state: RootState) => state.accountReducer,
   );
-  
+
   const found =
     aid !== "new" ? assignments.find((a: any) => a._id === aid) : null;
-  const [assignment, setAssignment] = useState(
+  const [assignment, setAssignment] = useState<any>(
     found || {
       title: "",
       description: "",
@@ -34,6 +35,18 @@ export default function AssignmentEditor() {
   const dispatch = useDispatch();
 
   const router = useRouter();
+
+  const onUpdateAssignment = async () => {
+    await client.updateAssignment(assignment);
+    dispatch(setAssignments(assignments.map((a: any) =>
+      a._id === assignment._id ? assignment : a,
+    )));
+  };
+
+  const onCreateAssignment = async () => {
+    const createdAssignment = await client.createAssignmentForCourse(cid as string, assignment);
+    dispatch(setAssignments([...assignments, createdAssignment]));
+  };
 
   return (
     <div>
@@ -90,7 +103,9 @@ export default function AssignmentEditor() {
             </Form.Label>
             <Col sm={10}>
               <div className="border rounded p-3 mb-3">
-                <Form.Select disabled={(currentUser as any)?.role !== "FACULTY"}>
+                <Form.Select
+                  disabled={(currentUser as any)?.role !== "FACULTY"}
+                >
                   <option value="assignment">ONLINE</option>
                 </Form.Select>
                 <br />
@@ -233,11 +248,11 @@ export default function AssignmentEditor() {
           </Link>
           <Button
             className="btn btn-danger"
-            onClick={() => {
+            onClick={async () => {
               if (aid === "new") {
-                dispatch(addAssignment({ ...assignment, course: cid }));
+                await onCreateAssignment();
               } else {
-                dispatch(updateAssignment(assignment));
+                await onUpdateAssignment();
               }
               router.push(`/courses/${cid}/assignments`);
             }}

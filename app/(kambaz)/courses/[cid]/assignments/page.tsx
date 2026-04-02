@@ -9,10 +9,12 @@ import ModuleControlButtons from "../modules/ModuleControlButtons";
 import LessonControlButtons from "../modules/LessonControlButtons";
 import GreenCheckmark from "../modules/GreenCheckmark";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { deleteAssignment, editAssignment } from "./reducer";
-import { useState } from "react";
+import { deleteAssignment, setAssignments } from "./reducer";
+import { useEffect, useState } from "react";
+import * as client from "../../client";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -25,7 +27,20 @@ export default function Assignments() {
 
   const dispatch = useDispatch();
   const [showDialog, setShowDialog] = useState(false);
-  const [assignmentToDelete, setAssignmentToDelete] = useState<string>("");
+  const [assignmentToDelete, setAssignmentsToDelete] = useState<string>("");
+
+  const fetchAssignment = async () => {
+    const data = await client.findAssignmentForCourse(cid as string);
+    dispatch(setAssignments(data));
+  };
+  useEffect(() => {
+    fetchAssignment();
+  }, []);
+
+  const onRemoveAssignment = async (assignmentId: string) => {
+    await client.deleteAssignment(assignmentId);
+    dispatch(setAssignments(assignments.filter((a: any) => a._id !== assignmentId)));
+  };
 
   return (
     <div>
@@ -62,12 +77,12 @@ export default function Assignments() {
                     <BsGripVertical className="me-2 fs-3" />
                     <LiaFileSignatureSolid className="me-2 fs-5 text-success" />
                     <div className="flex-grow-1">
-                      <a
+                      <Link
                         href={`/courses/${cid}/assignments/${assignment._id}`}
                         className="text-decoration-none text-dark fw-bold"
                       >
                         {assignment.title}
-                      </a>
+                      </Link>
                       <br />
                       <span style={{ fontSize: "0.7em", color: "red" }}>
                         Multiple Modules
@@ -84,7 +99,7 @@ export default function Assignments() {
                         <FaTrash
                           className="text-danger me-2 mb-1"
                           onClick={() => {
-                            setAssignmentToDelete(assignment._id);
+                            setAssignmentsToDelete(assignment._id);
                             setShowDialog(true);
                           }}
                         />
@@ -109,7 +124,7 @@ export default function Assignments() {
                           <Button
                             variant="danger"
                             onClick={() => {
-                              dispatch(deleteAssignment(assignmentToDelete));
+                              onRemoveAssignment(assignmentToDelete);
                               setShowDialog(false);
                             }}
                           >
