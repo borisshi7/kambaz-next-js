@@ -18,7 +18,7 @@ export default function CourseNavigation() {
     { label: "Assignments", path: "assignments" },
     { label: "Quizzes", path: "quizzes" },
     { label: "Grades", path: "grades" },
-    { label: "People", path: "people/table" },
+    { label: "People", path: "people" },
   ];
   return (
     <>
