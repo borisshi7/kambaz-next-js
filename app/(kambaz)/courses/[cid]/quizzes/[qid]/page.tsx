@@ -49,7 +49,6 @@ export default function QuizEditorPage() {
     },
   );
 
-  // "details" = read-only summary, "edit" = editor tabs, "preview" = student view
   const [mode, setMode] = useState(qid === "new" ? "edit" : "details");
   const [activeTab, setActiveTab] = useState("details");
 
@@ -66,12 +65,10 @@ export default function QuizEditorPage() {
     router.push(`/courses/${cid}/quizzes`);
   };
 
-  // Student: always show quiz view
   if (!isFaculty && qid !== "new") {
     return <StudentQuizView quiz={quiz} />;
   }
 
-  // Faculty: preview mode
   if (mode === "preview") {
     return (
       <div>
@@ -84,7 +81,6 @@ export default function QuizEditorPage() {
     );
   }
 
-  // Faculty: read-only details
   if (mode === "details") {
     return (
       <div>
@@ -102,7 +98,6 @@ export default function QuizEditorPage() {
     );
   }
 
-  // Faculty: edit mode with tabs
   return (
     <div>
       <Nav variant="tabs" className="mb-3">
