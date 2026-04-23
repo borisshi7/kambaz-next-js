@@ -5,14 +5,12 @@ import { LiaFileSignatureSolid } from "react-icons/lia";
 import { FaPlus, FaTrash } from "react-icons/fa6";
 import { IoEllipsisVertical } from "react-icons/io5";
 import AssignmentControls from "./assignmentsControls";
-import ModuleControlButtons from "../modules/ModuleControlButtons";
 import LessonControlButtons from "../modules/LessonControlButtons";
-import GreenCheckmark from "../modules/GreenCheckmark";
 import { useParams } from "next/navigation";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/(kambaz)/store";
-import { deleteAssignment, setAssignments } from "./reducer";
+import { setAssignments } from "./reducer";
 import { useEffect, useState } from "react";
 import * as client from "../../client";
 
